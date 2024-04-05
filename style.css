@@ -11,6 +11,9 @@ body {
     padding: 48px 64px;
 }
 
+.hidden {
+    display: none !important;
+}
 
 /* layouts */
 .container {
@@ -47,6 +50,12 @@ body {
     border-radius: 100px;
 }
 
+@keyframes slideIn {
+    from { max-height: 0;} to { max-height: 500px;}
+}
+.factform.open{
+    animation: slideIn 0.3s;
+} 
 
 /*elements*/
 .logo {
