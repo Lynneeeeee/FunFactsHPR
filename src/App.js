@@ -1,5 +1,6 @@
-import { useState } from "react";
-import "./style.css"
+import { useEffect, useState } from "react";
+import "./style.css";
+import supabase from "./supabase";
 
 const initialFacts = [
   {
@@ -36,7 +37,25 @@ const initialFacts = [
 
 function App() {
   const [showForm, setShowForm] = useState(false);
-  const [facts, setFacts] = useState(initialFacts);
+  const [facts, setFacts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(function() {
+    async function getFacts(){
+      setIsLoading(true);
+      const { data: facts, error } = await supabase
+      .from("facts").select("*")
+      .order("votesInteresting",{ascending:false})
+      .limit(1000); // Will do "next page" later
+
+      if (!error) setFacts(facts);
+      else alert("There was a problem getting data")
+      setIsLoading(false);;
+
+      
+      }
+    getFacts();
+  }, []);
 
   // JSX
   return (<>
@@ -45,9 +64,13 @@ function App() {
 
   <main className="main">
     <CategoryFilter />
-    <FactList facts={facts} />
+    {isLoading ? <Loader /> : <FactList facts={facts} />}
   </main>
   </>);
+}
+
+function Loader() {
+  return<p className="message">Loading...</p>
 }
 
 function Header({ showForm, setShowForm }) {
@@ -108,7 +131,7 @@ function NewFactForm( {setFacts, setShowForm} ) {
 
       // 6. Close the form, pop up a successful window
       setShowForm(false);
-      // Popup();
+      alert("Submit successfully!");
     }
 
     // function Popup() {
