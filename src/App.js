@@ -3,38 +3,6 @@ import "./style.css";
 import supabase from "./supabase";
 // import { layui } from "layui";
 
-const initialFacts = [
-  {
-      id: 1,
-      text: 'Zenith is the name of our rocket for SAC2025',
-      source: 'https://zenith.com/',
-      category: 'General',
-      votesInteresting: 24,
-      votesMindblowing: 9,
-      votesFalse: 4,
-      createdIn: 2021,
-  },
-  {
-      id: 2,
-      text: 'We currently have 3 Alex in HPR',
-      source: 'https://teams.com/',
-      category: 'Dynamics',
-      votesInteresting: 11,
-      votesMindblowing: 2,
-      votesFalse: 0,
-      createdIn: 2019,
-  },
-  {
-      id: 3,
-      text: 'Aether aims to 30,000 ft',
-      source: 'https://www.monashhpr.com/',
-      category: 'Structures',
-      votesInteresting: 8,
-      votesMindblowing: 3,
-      votesFalse: 1,
-      createdIn: 2015,
-  },
-]
 
 function App() {
   const [showForm, setShowForm] = useState(false);
@@ -107,27 +75,36 @@ function NewFactForm( {setFacts, setShowForm} ) {
   const [text, setText] = useState("");
   const [source, setSource] = useState("");
   const [category, setCategory] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     // 1.Prevent browser reload
     e.preventDefault();
 
     // 2.Check if data is valid. If so, create a new fact
     if (text && text.length<=200 && category) {
       // 3.Create a new fact object
-      const newFact = {
-        id: Math.round(Math.random() * 10000000000),// Will get from Supabase later
-        text: text,
-        source: source,
-        category: category,
-        votesInteresting: 0,
-        votesMindblowing: 0,
-        votesFalse: 0,
-        createdIn: new Date().getFullYear(), // Will make sure same as Supabase representation later
-      }
+      // const newFact = {
+      //   id: Math.round(Math.random() * 10000000000),// Will get from Supabase later
+      //   text: text,
+      //   source: source,
+      //   category: category,
+      //   votesInteresting: 0,
+      //   votesMindblowing: 0,
+      //   votesFalse: 0,
+      //   createdIn: new Date().getFullYear(), // Will make sure same as Supabase representation later
+      // }
+      // 3.Upload fact to Supabase and receive the new fact object
+      setIsUploading(true);
+      const { data: newFact, error } = await supabase
+        .from("facts")
+        .insert([{text, source, category}])
+        .select();
+      setIsUploading(false);
 
-      // 4.Add the new fact to the UI&state
-      setFacts((facts) => [newFact, ...facts]);
+      // 4.Add the new fact to the UI and state
+      setFacts((facts) => [newFact[0], ...facts]);
+      
 
       // 5.Reset input fields
       setText("");
@@ -143,22 +120,22 @@ function NewFactForm( {setFacts, setShowForm} ) {
   return (
   <form className="factform" onSubmit={handleSubmit}>
     <input type="text" placeholder="Share a fact about HPR..." 
-    value={text}
+    value={text} disabled={isUploading}
     onChange={(e) => setText(e.target.value)}/>
     <span>{200-text.length}</span>
     
     <input type="text" placeholder="Trustworthy source..."
-    value={source}
+    value={source} disabled={isUploading}
     onChange={(e) => setSource(e.target.value)}/>
     
-    <select value={category}
+    <select value={category} disabled={isUploading}
     onChange={(e)=>setCategory(e.target.value)}>
         <option value="">Choose category:</option>
         {CATEGORIES.map((cat)=>
         <option key={cat.name} value={cat.name}>{cat.name.toUpperCase()}</option>)}
     </select>
 
-    <button className="btn btn-large"> Post </button>
+    <button className="btn btn-large" disabled={isUploading}> Post </button>
   </form>);
 }
 
@@ -190,6 +167,10 @@ function CategoryFilter({fact, setCategory}) {
 }
 
 function FactList({ facts }) {
+  if(facts.length === 0)
+    return (<p className="message">
+            No facts for this section yet 😭 Add your first fact!
+            </p>);
   return <section>
     <ul className="facts-list">{facts.map((fact)=><Fact key={fact.id} fact={fact}/>)}</ul>
     <p>There are {facts.length} facts in the database now.</p>
