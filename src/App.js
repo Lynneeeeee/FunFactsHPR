@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./style.css";
 import supabase from "./supabase";
+// import { layui } from "layui";
 
 const initialFacts = [
   {
@@ -39,23 +40,27 @@ function App() {
   const [showForm, setShowForm] = useState(false);
   const [facts, setFacts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentCategory, setCatgory] = useState("All");
 
   useEffect(function() {
     async function getFacts(){
       setIsLoading(true);
-      const { data: facts, error } = await supabase
-      .from("facts").select("*")
-      .order("votesInteresting",{ascending:false})
-      .limit(1000); // Will do "next page" later
+
+      let query = supabase.from("facts").select("*");
+
+      if(currentCategory !== "All"){
+        query = query.eq("category", currentCategory)}
+
+      const { data: facts, error } = await query
+        .order("votesInteresting", {ascending:false})
+        .limit(1000);  // Will do "next page" later
 
       if (!error) setFacts(facts);
       else alert("There was a problem getting data")
       setIsLoading(false);;
-
-      
       }
     getFacts();
-  }, []);
+  }, [currentCategory]);
 
   // JSX
   return (<>
@@ -63,7 +68,7 @@ function App() {
   {showForm ? <NewFactForm setFacts={setFacts} setShowForm={setShowForm}/> : null}
 
   <main className="main">
-    <CategoryFilter />
+    <CategoryFilter setCategory={setCatgory}/>
     {isLoading ? <Loader /> : <FactList facts={facts} />}
   </main>
   </>);
@@ -131,12 +136,8 @@ function NewFactForm( {setFacts, setShowForm} ) {
 
       // 6. Close the form, pop up a successful window
       setShowForm(false);
-      alert("Submit successfully!");
+      alert("Submit Successfully!");
     }
-
-    // function Popup() {
-      
-    // }
   }
 
   return (
@@ -173,12 +174,15 @@ const CATEGORIES = [
   {name: 'Payload', color: '#8b5cf6'}
 ];
 
-function CategoryFilter({fact}) {
+function CategoryFilter({fact, setCategory}) {
   return (<aside>
     <ul>
-      <li className="category"><button className="btn btn-all">All</button></li>
+      <li className="category"><button className="btn btn-all"
+      onClick={()=>setCategory("All")}>All</button></li>
       {CATEGORIES.map((cat)=>
-      <li key={cat.name} className="category"><button className="btn btn-cat" style={{backgroundColor: cat.color}}>
+      <li key={cat.name} className="category"><button className="btn btn-cat" 
+      style={{backgroundColor: cat.color}}
+      onClick={()=>setCategory(cat.name)}>
         {cat.name}</button>
       </li>)}
     </ul>

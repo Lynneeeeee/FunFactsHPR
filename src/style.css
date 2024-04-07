@@ -20,7 +20,21 @@ body {
     max-width: 1500px;
     margin: 0 auto;
 }
-
+#msg {
+    height: 2rem;
+    text-align: center;
+    top:50%;
+    position: fixed;
+    margin-top: -1rem;
+    line-height: 2rem;
+    width: 100%;
+}
+#msg span{
+    color: #292524;
+    height: 2rem;
+    display: inline-block;
+    border-radius: 100px;
+}
 .message {
     text-align: center;
     text-transform: uppercase;
