@@ -202,7 +202,9 @@ ul {
     background-color:#292524;
     color:#fafaf9;
 }
-
+.vote-buttons button:disabled { /*separate instead of hover all btns*/
+    background-color:#44403c;
+}
 
 /* Form */
 

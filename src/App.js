@@ -37,7 +37,7 @@ function App() {
 
   <main className="main">
     <CategoryFilter setCategory={setCatgory}/>
-    {isLoading ? <Loader /> : <FactList facts={facts} />}
+    {isLoading ? <Loader /> : <FactList facts={facts} setFacts={setFacts}/>}
   </main>
   </>);
 }
@@ -103,7 +103,8 @@ function NewFactForm( {setFacts, setShowForm} ) {
       setIsUploading(false);
 
       // 4.Add the new fact to the UI and state
-      setFacts((facts) => [newFact[0], ...facts]);
+      if(!error) setFacts((facts) => [newFact[0], ...facts]);
+      else alert("There was a problem loading new fact to UI")
       
 
       // 5.Reset input fields
@@ -166,19 +167,35 @@ function CategoryFilter({fact, setCategory}) {
   </aside>);
 }
 
-function FactList({ facts }) {
+function FactList({ facts, setFacts }) {
   if(facts.length === 0)
     return (<p className="message">
             No facts for this section yet 😭 Add your first fact!
             </p>);
   return <section>
-    <ul className="facts-list">{facts.map((fact)=><Fact key={fact.id} fact={fact}/>)}</ul>
+    <ul className="facts-list">{facts.map((fact)=>
+      <Fact key={fact.id} fact={fact} setFacts={setFacts}/>)}</ul>
     <p>There are {facts.length} facts in the database now.</p>
   </section>;
 }
 
-function Fact({fact}) {
-  // const {factObj} = props;
+function Fact({fact, setFacts}) {
+  const [isUpdatingVotes, setIsUpdatingVotes] = useState(false);
+
+  async function handleVotes(columnName) {
+    setIsUpdatingVotes(true);
+    const { data: updatedFact, error } = await supabase
+    .from("facts")
+    .update({ [columnName]: fact[columnName] + 1 })
+    .eq("id", fact.id)
+    .select()
+    setIsUpdatingVotes(false);
+
+    if(!error) setFacts((facts) => facts.map((el) => 
+      el.id === fact.id ? updatedFact[0] : el));
+      // else alert("There was a problem updating votes")
+  }
+
   return (
   <li className="fact">
     <p className="fact-text">{fact.text}
@@ -190,9 +207,12 @@ function Fact({fact}) {
     </span>
 
     <div className="vote-buttons">
-        <button>👍 {fact.votesInteresting}</button>
-        <button>🤯 {fact.votesMindblowing}</button>
-        <button>❌ {fact.votesFalse}</button>
+        <button onClick={() => handleVotes("votesInteresting")} disabled={isUpdatingVotes}>
+          👍 {fact.votesInteresting}</button>
+        <button onClick={() => handleVotes("votesMindblowing")} disabled={isUpdatingVotes}>
+          🤯 {fact.votesMindblowing}</button>
+        <button onClick={() => handleVotes("votesFalse")} disabled={isUpdatingVotes}>
+          ❌ {fact.votesFalse}</button>
     </div>
   </li>);
 }
