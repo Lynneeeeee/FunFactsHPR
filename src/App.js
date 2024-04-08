@@ -181,6 +181,8 @@ function FactList({ facts, setFacts }) {
 
 function Fact({fact, setFacts}) {
   const [isUpdatingVotes, setIsUpdatingVotes] = useState(false);
+  const [isVoted, setVoted] = useState(false);
+
   const isDisputed = 
     fact.votesInteresting + fact.votesMindblowing
     < fact.votesFalse;
@@ -197,6 +199,8 @@ function Fact({fact, setFacts}) {
     if(!error) setFacts((facts) => facts.map((el) => 
       el.id === fact.id ? updatedFact[0] : el));
       // else alert("There was a problem updating votes")
+
+    setVoted(!isVoted);
   }
 
   return (
@@ -212,11 +216,14 @@ function Fact({fact, setFacts}) {
     </span>
 
     <div className="vote-buttons">
-        <button onClick={() => handleVotes("votesInteresting")} disabled={isUpdatingVotes}>
+        <button onClick={() => handleVotes("votesInteresting")} 
+            disabled={isUpdatingVotes || isVoted}>
           👍 {fact.votesInteresting}</button>
-        <button onClick={() => handleVotes("votesMindblowing")} disabled={isUpdatingVotes}>
+        <button onClick={() => handleVotes("votesMindblowing")} 
+            disabled={isUpdatingVotes || isVoted}>
           🤯 {fact.votesMindblowing}</button>
-        <button onClick={() => handleVotes("votesFalse")} disabled={isUpdatingVotes}>
+        <button onClick={() => handleVotes("votesFalse")} 
+            disabled={isUpdatingVotes || isVoted}>
           ❌ {fact.votesFalse}</button>
     </div>
   </li>);
