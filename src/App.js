@@ -208,7 +208,7 @@ function Fact({fact, setFacts}) {
     <p className="fact-text">
       {isDisputed ? <span className="disputed">[❗️DISPUTED]</span> : null}
       {fact.text}
-      <a className="source" href={fact.source} target="_blank">(Source)</a>
+      <a className="source" href={fact.source} target="_blank" rel="noopener noreferrer">(Source)</a>
     </p>
 
     <span className="tag" style={{backgroundColor: CATEGORIES.find((cat)=> cat.name===fact.category).color}}>
@@ -228,4 +228,6 @@ function Fact({fact, setFacts}) {
     </div>
   </li>);
 }
+
+
 export default App;
