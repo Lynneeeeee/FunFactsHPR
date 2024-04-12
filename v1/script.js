@@ -3,7 +3,7 @@ const CATEGORES = [
     {name: 'Business', color: '#16a34a'},
     {name: 'Dynamics', color: '#ef4444'},
     {name: 'Structures', color: '#eab308'},
-    {name: 'Porpulsion', color: '#db2777'},
+    {name: 'Propulsion', color: '#db2777'},
     {name: 'Control', color: '#14b8a6'},
     {name: 'FlightSys', color: '#f97316'},
     {name: 'Payload', color: '#8b5cf6'}
