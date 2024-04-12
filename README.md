@@ -6,7 +6,7 @@ Welcome to our Fun Facts HPR website! This project is a React-based web applicat
 
 Know more about HPR: https://www.monashhpr.com/.  
 
-<img width="1904" alt="Screen Shot 2024-04-12 at 20 17 08" src="https://github.com/Ying-xue-Li/FunFactsHPR/assets/118246943/6392e3e9-fee3-47da-8135-37fec80456f2">
+<img width="1898" alt="Screen Shot 2024-04-12 at 20 41 36" src="https://github.com/Ying-xue-Li/FunFactsHPR/assets/118246943/4a4252c9-010a-47f7-9f55-127ecad65ff6">
 
 
 ## Technology Stack
@@ -16,7 +16,7 @@ Backend: Supabase
 
 ## Features
 1. Share Fun Facts: You can share fun facts about HPR through the share by clicking the share button in the top right corner of the website. This will expand a form where you can fill in your fact along with a credible source and a subsection category. The form automatically records the word count (limited to 200 words) before publishing.
-   <img width="1450" alt="Screen Shot 2024-04-12 at 20 07 44" src="https://github.com/Ying-xue-Li/FunFactsHPR/assets/118246943/1f037954-9e2b-42d0-8e5c-fe898e85f52f">
+   <img width="1200" alt="Screen Shot 2024-04-12 at 20 07 44" src="https://github.com/Ying-xue-Li/FunFactsHPR/assets/118246943/1f037954-9e2b-42d0-8e5c-fe898e85f52f">
 
 2. Once a fact is published, other users can interact with it by liking 👍, disliking ❌, or marking it as mindblowing 🤯. Each user can only like a fact once per session. Once a vote is cast, the corresponding button becomes inactive and turns red. If a fact receives too many dislikes, it will be marked as '❗️DISPUTED'.
 
@@ -26,13 +26,13 @@ Backend: Supabase
 
 4. Browse by Subsection: The 'All' button and the initial page displays facts from all categories. You can browse facts from specific subsections by clicking on other 8 subsection categories in the sidebar. Each category's tag color corresponds to its respective subsection.
 
-   <img width="1450" alt="Screen Shot 2024-04-12 at 20 30 39" src="https://github.com/Ying-xue-Li/FunFactsHPR/assets/118246943/87af5303-fc18-4ab4-8d61-d6de01b1ff0c">
+   <img width="1200" alt="Screen Shot 2024-04-12 at 20 41 53" src="https://github.com/Ying-xue-Li/FunFactsHPR/assets/118246943/7e900561-20d4-4983-b370-53cf91f740b3">
 
 
 
 
 ## Contributing
-I welcome contributions from anyone interested in improving our Fun Facts website! Whether it's adding new features, fixing bugs, or suggesting enhancements... Currently I have lots of things to do (see in issues page), so your contributions are valuable to me. You can contribute in 2 ways:  
+I welcome contributions from anyone interested in improving our Fun Facts website! Whether it's adding new features, fixing bugs, or suggesting enhancements... You can contribute in 3 ways:  
 1. Visit the website and explore by yourself, give me feedback by email or message.
    
 2. Click on the "Issues" tab, then click the "New issue" button to create a new issue. Here, you can describe the details of the bug, the steps to reproduce it, and the expected behavior.
