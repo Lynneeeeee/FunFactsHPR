@@ -6,9 +6,11 @@ Welcome to our Fun Facts HPR website! This project is a React-based web applicat
 
 ## Features
 1. Share Fun Facts: Users can share fun facts about HPR through our website. When posting a fact, they are required to provide a credible source and a subsection category.
-   
+   <img width="1472" alt="Screen Shot 2024-04-12 at 20 07 44" src="https://github.com/Ying-xue-Li/FunFactsHPR/assets/118246943/1f037954-9e2b-42d0-8e5c-fe898e85f52f">
+
 2. Interact with Facts: Users can interact with posted fact by liking 👍, disliking ❌, or marking it as mindblowing 🤯. If a fact receives too many dislikes, it will be marked as "❗️DISPUTED."
-   
+   <img width="213" alt="Screen Shot 2024-04-12 at 20 08 12" src="https://github.com/Ying-xue-Li/FunFactsHPR/assets/118246943/ea51d0f7-d71c-4432-bf69-b6c09d3af277">
+
 3. Browse by Subsection: All facts are displayed on the initial page, and users can navigate through 8 subsections (Business, Dynamics, Structures, Propulsion, Control, FlightSys and Payload) via the sidebar to view facts relevant to their interests.
 
 ## Technologies Used
