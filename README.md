@@ -1,5 +1,6 @@
 # Fun Facts HPR
 ## https://fun-facts-hpr.netlify.app/ 
+<img width="1899" alt="Screen Shot 2024-04-12 at 20 04 48" src="https://github.com/Ying-xue-Li/FunFactsHPR/assets/118246943/d80bd59a-2120-4f65-8cfa-e1182dc9f56e">
 
 Welcome to our Fun Facts HPR website! This project is a React-based web application. The main purpose of this website is to provide a platform for sharing interesting facts about HPR (High-Power Rocketry), particularly related to my student rocket team (know more about HPR: https://www.monashhpr.com/).
 
